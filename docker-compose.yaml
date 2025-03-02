@@ -1,0 +1,49 @@
+services:
+  # PHP Service
+  course:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: laravel_course_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./src:/var/www
+    networks:
+      - course-network
+
+  # Nginx Service
+  nginx:
+    image: nginx:alpine
+    container_name: laravel_course_nginx
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - course-network
+
+  # MySQL Service
+  db:
+    image: mysql:8.0
+    container_name: course_db
+    restart: unless-stopped
+    platform: "linux/amd64"
+    environment:
+      MYSQL_DATABASE: laravel
+      MYSQL_ROOT_PASSWORD: your_mysql_root_password
+      MYSQL_PASSWORD: your_mysql_password
+      MYSQL_USER: laravel_user
+    volumes:
+      - coursedata:/var/lib/mysql
+    networks:
+      - course-network
+
+networks:
+  course-network:
+    driver: bridge
+
+volumes:
+  coursedata:
+    driver: local
