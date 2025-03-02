@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\TeacherResource;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 
@@ -10,7 +11,7 @@ class TeacherController extends Controller
 {
     public function index()
     {
-        return Teacher::select('id', 'name', 'email')->get();
+        return TeacherResource::collection(Teacher::all());
     }
 
     public function store(Request $request)

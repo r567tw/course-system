@@ -15,10 +15,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "maxItems": 2,
-                                    "items": {
-                                        "$ref": "#/components/schemas/Course"
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "maxItems": 10,
+                                            "items": {
+                                                "$ref": "#/components/schemas/Course"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -34,14 +39,28 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Course"
+                                "$ref": "#/components/schemas/CoursePOST"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Course created"
+                        "description": "Course created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "description": "The ID of the created course",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -65,14 +84,28 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/Course"
+                                "$ref": "#/components/schemas/CoursePOST"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Course updated"
+                        "description": "Course updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "description": "The ID of the created course",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -106,10 +139,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "maxItems": 2,
-                                    "items": {
-                                        "$ref": "#/components/schemas/Teacher"
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "maxItems": 10,
+                                            "items": {
+                                                "$ref": "#/components/schemas/Teacher"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -171,10 +209,15 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "maxItems": 2,
-                                    "items": {
-                                        "$ref": "#/components/schemas/Course"
+                                    "type": "object",
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "maxItems": 10,
+                                            "items": {
+                                                "$ref": "#/components/schemas/TeacherCourse"
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -186,6 +229,41 @@
     },
     "components": {
         "schemas": {
+            "CoursePOST": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "start": {
+                        "type": "string",
+                        "example": "15:00"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "teacher_id": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "TeacherCourse": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "start": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                }
+            },
             "Course": {
                 "type": "object",
                 "properties": {
@@ -193,6 +271,9 @@
                         "type": "string"
                     },
                     "name": {
+                        "type": "string"
+                    },
+                    "start": {
                         "type": "string"
                     },
                     "description": {
